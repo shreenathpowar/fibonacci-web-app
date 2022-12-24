@@ -19,10 +19,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:$DOCKER_IMAGE -f ./client/Dockerfile.dev ./client
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:$DOCKER_IMAGE -f ./client/Dockerfile.dev ./client
 
       - name: Run Jest tests
-        run: docker run -e CI=true ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:$DOCKER_IMAGE npm run test -- --coverage
+        run: docker run -e CI=true ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:$DOCKER_IMAGE npm run test -- --coverage
 
   publish:
     name: Build and Publish Images
@@ -35,15 +35,15 @@ jobs:
 
       - name: Build Docker Images
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:client ./client
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:nginx ./nginx
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:server ./server
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:worker ./worker
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:client ./client
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:nginx ./nginx
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:server ./server
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:worker ./worker
 
       - name: Publish Docker Images
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:client
-          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:nginx
-          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:server
-          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci_calculator:worker
+          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:client
+          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:nginx
+          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:server
+          docker push ${{ secrets.DOCKER_USERNAME }}/fibonacci-web-app:worker
