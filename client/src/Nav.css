@@ -14,3 +14,12 @@
     text-decoration: none;
     color: white;
 }
+
+.Link {
+    text-decoration: none;
+    color: #282c34;
+}
+
+.space {
+    padding: 5px
+}
