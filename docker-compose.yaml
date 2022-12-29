@@ -1,0 +1,34 @@
+version: '3'
+services:
+  nginx:
+    image: "shreenathp/fibonacci-web-app:nginx"
+    hostname: nginx
+    mem_limit: 128m
+    depends_on:
+      - api
+      - client
+    ports:
+      - '80:80'
+  api:
+    image: "shreenathp/fibonacci-web-app:server"
+    hostname: api
+    mem_limit: 128m
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+      - PGUSER=$PGUSER
+      - PGHOST=$PGHOST
+      - PGDATABASE=$PGDATABASE
+      - PGPASSWORD=$PGPASSWORD
+      - PGPORT=$PGPORT
+  client:
+    image: "shreenathp/fibonacci-web-app:client"
+    hostname: client
+    mem_limit: 128m
+  worker:
+    image: "shreenathp/fibonacci-web-app:worker"
+    hostname: worker
+    mem_limit: 128m
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
